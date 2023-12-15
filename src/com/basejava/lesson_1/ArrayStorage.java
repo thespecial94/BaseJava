@@ -20,9 +20,9 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (Resume resume : getAll()) {
-            if (resume.getUuid().equals(uuid)) {
-                return resume;
+        for (int i = 0; i < countResume; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                return storage[i];
             }
         }
         return null;
@@ -32,7 +32,7 @@ public class ArrayStorage {
         for (int i = 0; i < countResume; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 if (i != --countResume) {
-                    System.arraycopy(storage, i + 1, storage, i, countResume - i + 1);
+                    System.arraycopy(storage, i + 1, storage, i, countResume - i);
                 }
                 storage[countResume] = null;
                 break;
