@@ -1,4 +1,4 @@
-package com.basejava.lesson_1;
+package com.basejava.lesson_1_2;
 /**
  * Test for your ArrayStorage implementation
  */
@@ -25,6 +25,10 @@ public class MainTestArrayStorage {
         printAll();
         ARRAY_STORAGE.delete(r1.uuid);
         printAll();
+        int indexResume = 2;
+        if (ARRAY_STORAGE.printExistsResume(indexResume)) {
+            ARRAY_STORAGE.update(ARRAY_STORAGE.getAll()[indexResume - 1]);
+        }
         ARRAY_STORAGE.clear();
         printAll();
 

@@ -1,4 +1,4 @@
-package com.basejava.lesson_1;
+package com.basejava.lesson_1_2;
 
 public class Resume {
 
