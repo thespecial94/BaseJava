@@ -1,6 +1,7 @@
 package com.basejava.webapp;
 
 import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.storage.ArrayStorage;
 
 /**
  * Test for your ArrayStorage implementation
