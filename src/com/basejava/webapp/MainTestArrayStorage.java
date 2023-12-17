@@ -1,4 +1,7 @@
-package com.basejava.lesson_1_2;
+package com.basejava.webapp;
+
+import com.basejava.webapp.model.Resume;
+
 /**
  * Test for your ArrayStorage implementation
  */
@@ -7,28 +10,25 @@ public class MainTestArrayStorage {
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
-        r1.uuid = "uuid1";
+        r1.setUuid("uuid1");
         Resume r2 = new Resume();
-        r2.uuid = "uuid2";
+        r2.setUuid("uuid2");
         Resume r3 = new Resume();
-        r3.uuid = "uuid3";
+        r3.setUuid("uuid3");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.uuid));
+        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
         printAll();
-        ARRAY_STORAGE.delete(r1.uuid);
+        ARRAY_STORAGE.update(ARRAY_STORAGE.getAll()[ARRAY_STORAGE.getIndex(r2.getUuid())]);
+        ARRAY_STORAGE.delete(r1.getUuid());
         printAll();
-        int indexResume = 2;
-        if (ARRAY_STORAGE.printExistsResume(indexResume)) {
-            ARRAY_STORAGE.update(ARRAY_STORAGE.getAll()[indexResume - 1]);
-        }
         ARRAY_STORAGE.clear();
         printAll();
 

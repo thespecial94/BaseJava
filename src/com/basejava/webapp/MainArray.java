@@ -1,4 +1,6 @@
-package com.basejava.lesson_1_2;
+package com.basejava.webapp;
+
+import com.basejava.webapp.model.Resume;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +32,7 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
