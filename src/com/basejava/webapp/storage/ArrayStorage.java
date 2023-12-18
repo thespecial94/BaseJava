@@ -7,9 +7,8 @@ import java.util.Arrays;
 public class ArrayStorage {
 
     public static final int STORAGE_LIMIT = 10000;
-    Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int countResume;
-    private int indexUuid;
 
     public void clear() {
         if (countResume > 0) {
@@ -21,7 +20,6 @@ public class ArrayStorage {
     public int getIndex(String uuid) {
         for (int i = 0; i < countResume; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                indexUuid = i;
                 System.out.println("Резюме " + uuid  + " найдено!");
                 return i;
             }
@@ -31,41 +29,46 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (indexUuid != -1) {
-            System.out.println("Резюме " + resume.getUuid() + " актулизировано!");
+        int index = getIndex(resume.getUuid());
+        if (index != -1) {
+            System.out.println("Резюме " + storage[0].getUuid() +
+                    " было актулизировано на " + resume.getUuid());
+            storage[2] = resume;
         }
     }
 
-    public boolean save(Resume resume) {
-        if(countResume + 1 > STORAGE_LIMIT) {
+    public void save(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if(countResume >= STORAGE_LIMIT) {
             System.out.println("Ошибка: резюме " + resume.getUuid() +
                     " не добавлено, так как превышает длину хранилища = " + STORAGE_LIMIT);
-            return false;
-        } else if (countResume!= 0 && getIndex(resume.getUuid()) != -1) {
-            return false;
+        } else if (index != -1) {
+            System.out.println("Ошибка: резюме " + resume.getUuid()  + " не добавлено!");
+        } else {
+            storage[countResume++] = resume;
+            System.out.println("Резюме " + resume.getUuid() + " добавлено!");
         }
-        storage[countResume++] = resume;
-        System.out.println("Резюме " + resume.getUuid() + " добавлено!");
-        return true;
     }
 
     public Resume get(String uuid) {
-        if (getIndex(uuid) == -1) {
+        int index = getIndex(uuid);
+        if (index == -1) {
             return null;
         }
-        return storage[indexUuid];
+        return storage[index];
     }
 
-    public boolean delete(String uuid) {
-        if (getIndex(uuid) == -1) {
-            return false;
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (countResume != 0 && index == -1) {
+            System.out.println("Ошибка: резюме " + uuid  + " не удалено!");
+        } else {
+            if (index != --countResume) {
+                System.arraycopy(storage, index + 1, storage, index, countResume - index);
+            }
+            storage[countResume] = null;
+            System.out.println("Резюме " + uuid  + " удалено!");
         }
-        if (indexUuid != --countResume) {
-            System.arraycopy(storage, indexUuid + 1, storage, indexUuid, countResume - indexUuid);
-        }
-        storage[countResume] = null;
-        System.out.println("Резюме " + uuid  + " удалено!");
-        return true;
     }
 
     public Resume[] getAll() {
