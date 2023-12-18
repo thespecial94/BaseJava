@@ -29,8 +29,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index != -1) {
+        if (getIndex(resume.getUuid()) != -1) {
             System.out.println("Резюме " + storage[0].getUuid() +
                     " было актулизировано на " + resume.getUuid());
             storage[2] = resume;
@@ -38,11 +37,10 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
         if(countResume >= STORAGE_LIMIT) {
             System.out.println("Ошибка: резюме " + resume.getUuid() +
                     " не добавлено, так как превышает длину хранилища = " + STORAGE_LIMIT);
-        } else if (index != -1) {
+        } else if (getIndex(resume.getUuid()) != -1) {
             System.out.println("Ошибка: резюме " + resume.getUuid()  + " не добавлено!");
         } else {
             storage[countResume++] = resume;
@@ -60,7 +58,7 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (countResume != 0 && index == -1) {
+        if (index == -1) {
             System.out.println("Ошибка: резюме " + uuid  + " не удалено!");
         } else {
             if (index != --countResume) {
