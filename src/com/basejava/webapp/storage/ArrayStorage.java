@@ -17,7 +17,7 @@ public class ArrayStorage {
         }
     }
 
-    public int getIndex(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < countResume; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 System.out.println("Резюме " + uuid  + " найдено!");
