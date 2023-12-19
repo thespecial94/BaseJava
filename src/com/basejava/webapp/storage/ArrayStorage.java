@@ -29,10 +29,10 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (getIndex(resume.getUuid()) != -1) {
-            System.out.println("Резюме " + storage[0].getUuid() +
-                    " было актулизировано на " + resume.getUuid());
-            storage[2] = resume;
+        int index = getIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index] = resume;
+            System.out.println("Резюме " + resume.getUuid() + " было актулизировано!");
         }
     }
 
@@ -61,9 +61,7 @@ public class ArrayStorage {
         if (index == -1) {
             System.out.println("Ошибка: резюме " + uuid  + " не удалено!");
         } else {
-            if (index != --countResume) {
-                System.arraycopy(storage, index + 1, storage, index, countResume - index);
-            }
+            storage[index] = storage[--countResume];
             storage[countResume] = null;
             System.out.println("Резюме " + uuid  + " удалено!");
         }
