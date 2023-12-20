@@ -1,19 +1,19 @@
 package com.basejava.webapp;
 
 import com.basejava.webapp.model.Resume;
-import com.basejava.webapp.storage.ArrayStorage;
+import com.basejava.webapp.storage.SortedArrayStorage;
+import com.basejava.webapp.storage.Storage;
 
 /**
  * Test for your ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
-
+    private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
     public static void main(String[] args) {
         Resume r1 = new Resume();
-        r1.setUuid("uuid1");
+        r1.setUuid("uuid2");
         Resume r2 = new Resume();
-        r2.setUuid("uuid2");
+        r2.setUuid("uuid1");
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
@@ -32,7 +32,6 @@ public class MainTestArrayStorage {
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
-
         System.out.println("Size: " + ARRAY_STORAGE.size());
     }
 
