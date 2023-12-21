@@ -10,7 +10,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteElement(int index) {
-        storage[index] = storage[--countResume];
+        storage[index] = storage[countResume];
     }
 
     protected int getIndex(String uuid) {

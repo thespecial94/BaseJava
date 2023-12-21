@@ -9,7 +9,7 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int countResume;
 
-    public void update(Resume resume) {
+    final public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
@@ -17,7 +17,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void save(Resume resume) {
+    final public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if(countResume >= STORAGE_LIMIT) {
             System.out.println("Ошибка: резюме " + resume.getUuid() +
@@ -31,18 +31,19 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void delete(String uuid) {
+    final public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Ошибка: резюме " + uuid  + " не удалено!");
         } else {
+            countResume--;
             deleteElement(index);
             storage[countResume] = null;
             System.out.println("Резюме " + uuid  + " удалено!");
         }
     }
 
-    public Resume get(String uuid) {
+    final public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             return null;
