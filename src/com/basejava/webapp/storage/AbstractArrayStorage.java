@@ -1,5 +1,8 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
+import com.basejava.webapp.exception.NotExistStorageException;
+import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -9,44 +12,43 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int countResume;
 
-    final public void update(Resume resume) {
+    public final void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
-            System.out.println("Резюме " + resume.getUuid() + " было актулизировано!");
+        } else {
+            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
-    final public void save(Resume resume) {
+    public final void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if(countResume >= STORAGE_LIMIT) {
-            System.out.println("Ошибка: резюме " + resume.getUuid() +
-                    " не добавлено, так как превышает длину хранилища = " + STORAGE_LIMIT);
+            throw new StorageException("Ошибка: резюме " + resume.getUuid() +
+                    " не добавлено, так как превышает длину хранилища = " + STORAGE_LIMIT, resume.getUuid());
         } else if(index >= 0) {
-            System.out.println("Ошибка: резюме " + resume.getUuid()  + " не добавлено!");
+            throw new ExistStorageException(resume.getUuid());
         } else {
             saveElement(resume, index);
             countResume++;
-            System.out.println("Резюме " + resume.getUuid() + " добавлено!");
         }
     }
 
-    final public void delete(String uuid) {
+    public final void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Ошибка: резюме " + uuid  + " не удалено!");
+            throw new NotExistStorageException(uuid);
         } else {
             countResume--;
             deleteElement(index);
             storage[countResume] = null;
-            System.out.println("Резюме " + uuid  + " удалено!");
         }
     }
 
-    final public Resume get(String uuid) {
+    public final Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
