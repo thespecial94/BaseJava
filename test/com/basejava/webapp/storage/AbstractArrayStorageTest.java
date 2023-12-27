@@ -81,7 +81,7 @@ public abstract class AbstractArrayStorageTest {
     public void saveOverflow() {
         try {
             storage.clear();
-            for (int i = 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
