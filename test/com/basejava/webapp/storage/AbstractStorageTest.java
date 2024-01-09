@@ -14,15 +14,19 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+    private static final String FULLNAME_1 = "fullName1";
+    private static final String FULLNAME_2 = "fullName2";
+    private static final String FULLNAME_3 = "fullName3";
+    private static final String FULLNAME_4 = "fullName4";
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
     private static final Resume RESUME_4;
     static {
-        RESUME_1 = new Resume(UUID_1);
-        RESUME_2 = new Resume(UUID_2);
-        RESUME_3 = new Resume(UUID_3);
-        RESUME_4 = new Resume(UUID_4);
+        RESUME_1 = new Resume(UUID_1, FULLNAME_1);
+        RESUME_2 = new Resume(UUID_2, FULLNAME_2);
+        RESUME_3 = new Resume(UUID_3, FULLNAME_3);
+        RESUME_4 = new Resume(UUID_4, FULLNAME_4);
     }
     private static final String UUID_NOT_EXIST = "dummy";
 
@@ -53,7 +57,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, FULLNAME_1);
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID_1));
     }
@@ -64,7 +68,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
+    public void getAllSorted() {
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
         assertArray(expected);
     }
@@ -114,6 +118,6 @@ public abstract class AbstractStorageTest {
     }
 
     private void assertArray(Resume[] expected) {
-        assertArrayEquals(expected, storage.getAll());
+        assertArrayEquals(expected, storage.getAllSorted().toArray(new Resume[0]));
     }
 }

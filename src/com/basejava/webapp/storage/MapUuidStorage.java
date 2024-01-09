@@ -2,10 +2,9 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
     private final Map<String, Resume> map = new LinkedHashMap<>();
 
     @Override
@@ -19,22 +18,22 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void executeSave(Resume resume, Object searchKey) {
+    protected void doSave(Resume resume, Object searchKey) {
         map.put((String) searchKey, resume);
     }
 
     @Override
-    protected Resume executeGet(Object searchKey) {
+    protected Resume doGet(Object searchKey) {
         return map.get((String) searchKey);
     }
 
     @Override
-    protected void executeUpdate(Resume resume, Object searchKey) {
+    protected void doUpdate(Resume resume, Object searchKey) {
         map.put((String) searchKey, resume);
     }
 
     @Override
-    protected void executeDelete(Object searchKey) {
+    protected void doDelete(Object searchKey) {
         map.remove((String) searchKey);
     }
 
@@ -44,8 +43,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return map.values().toArray(new Resume[map.size()]);
+    public List<Resume> doGetAll() {
+        return new ArrayList<>(map.values());
     }
 
     @Override
