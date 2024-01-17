@@ -1,13 +1,15 @@
 package com.basejava.webapp.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Resume {
 
     // Unique identifier
     private final String uuid;
     private final String fullName;
+
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -44,5 +46,21 @@ public class Resume {
     @Override
     public String toString() {
         return uuid + ", " + fullName;
+    }
+
+    public String getContact(ContactType type) {
+        return contacts.get(type);
+    }
+
+    public void setContact(ContactType type, String value) {
+        this.contacts.put(type,value);
+    }
+
+    public Section getSection(SectionType type) {
+        return sections.get(type);
+    }
+
+    public void setSection(SectionType type,Section section) {
+        this.sections.put(type,section);
     }
 }
