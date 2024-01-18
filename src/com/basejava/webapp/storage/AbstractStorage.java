@@ -10,12 +10,9 @@ import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SK> implements Storage {
 
-    private final static Comparator<Resume> RESUME_COMPARATOR;
+    private final static Comparator<Resume> RESUME_COMPARATOR =
+            Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
-
-    static {
-        RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
-    }
 
     public final void update(Resume resume) {
         LOG.info("Update " + resume);

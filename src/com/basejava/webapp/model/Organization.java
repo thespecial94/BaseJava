@@ -18,6 +18,14 @@ public class Organization {
         this.periods = periods;
     }
 
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

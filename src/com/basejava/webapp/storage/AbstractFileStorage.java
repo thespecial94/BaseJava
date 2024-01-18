@@ -31,9 +31,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doSave(Resume resume, File file) {
         try {
-            if (file.createNewFile()) {
-                doWrite(resume, file);
-            }
+            file.createNewFile();
+            doWrite(resume, file);
         } catch (IOException e) {
             throw new StorageException("File was not created or wrote", file.getName());
         }
@@ -42,12 +41,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected Resume doGet(File file) {
-        return doRead(file);
+        try {
+            return doRead(file);
+        } catch (IOException e) {
+            throw new StorageException("File read error", file.getName());
+        }
     }
 
     @Override
     protected void doUpdate(Resume resume, File file) {
-        doWrite(resume, file);
+        try {
+            doWrite(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("File write error", resume.getUuid());
+        }
     }
 
     @Override
@@ -77,17 +84,21 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             for (File file : files) {
                 doDelete(file);
             }
+        } else {
+            throw new StorageException("Directory is empty", null);
         }
     }
 
     @Override
     public int size() {
         String[] list = directory.list();
-        assert list != null;
+        if (list == null) {
+            throw new StorageException("Directory is empty", null);
+        }
         return list.length;
     }
 
-    protected abstract Resume doRead(File file);
+    protected abstract Resume doRead(File file) throws IOException;
 
-    protected abstract void doWrite(Resume resume, File file);
+    protected abstract void doWrite(Resume resume, File file) throws IOException;
 }
