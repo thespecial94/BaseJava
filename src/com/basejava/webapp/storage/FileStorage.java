@@ -52,11 +52,11 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void doUpdate(Resume r, File file) {
+    protected void doUpdate(Resume resume, File file) {
         try {
-            streamSerializer.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            streamSerializer.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("File write error", r.getUuid(), e);
+            throw new StorageException("File write error", resume.getUuid(), e);
         }
     }
 
@@ -66,13 +66,13 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void doSave(Resume r, File file) {
+    protected void doSave(Resume resume, File file) {
         try {
             file.createNewFile();
         } catch (IOException e) {
             throw new StorageException("Couldn't create file " + file.getAbsolutePath(), file.getName(), e);
         }
-        doUpdate(r, file);
+        doUpdate(resume, file);
     }
 
     @Override

@@ -46,11 +46,11 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected void doUpdate(Resume r, Path path) {
+    protected void doUpdate(Resume resume, Path path) {
         try {
-            streamSerializer.doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
+            streamSerializer.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("Path write error", r.getUuid(), e);
+            throw new StorageException("Path write error", resume.getUuid(), e);
         }
     }
 
@@ -60,13 +60,13 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected void doSave(Resume r, Path path) {
+    protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
         } catch (IOException e) {
             throw new StorageException("Couldn't create path " + path, getFileName(path), e);
         }
-        doUpdate(r, path);
+        doUpdate(resume, path);
     }
 
     @Override
