@@ -27,19 +27,19 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        printDirectory(dir);
+        printDirectory(dir, " ");
     }
 
-    public static void printDirectory(File dir) {
+    public static void printDirectory(File dir, String offset) {
         File[] files = dir.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println("     File: " + file.getName());
+                    System.out.println(offset + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println("Directory: " + file.getName());
-                    printDirectory(file);
+                    System.out.println(offset + "Directory: " + file.getName());
+                    printDirectory(file, offset + "   ");
                 }
             }
         }
