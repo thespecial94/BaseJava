@@ -26,7 +26,6 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_2 = createResume(UUID_2,FULLNAME_2);
     private static final Resume RESUME_3 = createResume(UUID_3,FULLNAME_3);
     private static final Resume RESUME_4 = createResume(UUID_4,FULLNAME_4);
-
     private static final String UUID_NOT_EXIST = "dummy";
 
     protected AbstractStorageTest(Storage storage) {

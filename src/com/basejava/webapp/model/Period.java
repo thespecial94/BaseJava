@@ -1,18 +1,29 @@
 package com.basejava.webapp.model;
 
+import com.basejava.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String title;
-    private final String description;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate startDate;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate endDate;
+    private String title;
+    private String description;
+
+    public Period() {
+    }
 
     public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
         Objects.requireNonNull(startDate, "startDate must not be null");
@@ -21,7 +32,7 @@ public class Period implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
-        this.description = description;
+        this.description = description  == null ? "" : description;
     }
 
     public LocalDate getStartDate() {
@@ -46,7 +57,7 @@ public class Period implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Period period = (Period) o;
         return Objects.equals(startDate, period.startDate) && Objects.equals(endDate, period.endDate)
-                && Objects.equals(title, period.title);
+                && Objects.equals(title, period.title) && Objects.equals(description, period.description);
     }
 
     @Override
