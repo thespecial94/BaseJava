@@ -62,7 +62,7 @@ public class Period implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(startDate, endDate, title);
+        return Objects.hash(startDate, endDate, title, description);
     }
 
     @Override

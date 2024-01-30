@@ -3,7 +3,6 @@ package com.basejava.webapp;
 import com.basejava.webapp.model.*;
 import com.basejava.webapp.util.DateUtil;
 
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +110,7 @@ public class ResumeTestData {
     private static OrganizationSection getExperienceSection() {
         return new OrganizationSection(
                 new Organization("Java Online Projects", "https://java.ru/JavaOnlineProjects",
-                        new Period(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(),
+                        new Period(DateUtil.of(2013, Month.OCTOBER), DateUtil.NOW,
                                 "Автор проекта",
                                 "Создание, организация и проведение Java онлайн проектов и стажировок.")),
                 new Organization("Wrike", "https://java.ru/Wrike",
@@ -170,7 +169,7 @@ public class ResumeTestData {
     private static OrganizationSection getEducationSection() {
         return new OrganizationSection(
                 new Organization("Coursera", "https://java.ru/Coursera",
-                        new Period(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(),
+                        new Period(DateUtil.of(2013, Month.OCTOBER), DateUtil.NOW,
                                 "Martin Odersky",
                                 "Functional Programming Principles in Scala' by Martin Odersky")),
                 new Organization("Luxoft", "https://java.ru/Luxoft",
