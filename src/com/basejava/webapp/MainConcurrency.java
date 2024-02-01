@@ -59,7 +59,10 @@ public class MainConcurrency {
         });
         System.out.println(mainConcurrency.counter);
 
-        deadLock();
+        final String object1 = "object1";
+        final String object2 = "object2";
+        DeadLock.deadLock(object1, object2);
+        DeadLock.deadLock(object2, object1);
     }
 
     private synchronized void inc() {
@@ -70,30 +73,5 @@ public class MainConcurrency {
 //                readFile
 //                ...
 //        }
-    }
-
-    private static void deadLock() {
-        Object object1 = new Object();
-        Object object2 = new Object();
-
-        new Thread(() -> {
-            synchronized (object1) {
-                System.out.println(Thread.currentThread().getName() + " get 1 thread");
-                System.out.println(Thread.currentThread().getName() + " trying get 2 thread");
-                synchronized (object2) {
-                    System.out.println(Thread.currentThread().getName() + " get 2 thread");
-                }
-            }
-        }).start();
-
-        new Thread(() -> {
-            synchronized (object2) {
-                System.out.println(Thread.currentThread().getName() + " get 2 thread");
-                System.out.println(Thread.currentThread().getName() + " trying get 1 thread");
-                synchronized (object1) {
-                    System.out.println(Thread.currentThread().getName() + " get 1 thread");
-                }
-            }
-        }).start();
     }
 }
