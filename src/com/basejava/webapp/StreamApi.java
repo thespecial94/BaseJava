@@ -2,6 +2,8 @@ package com.basejava.webapp;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StreamApi {
 
@@ -11,9 +13,9 @@ public class StreamApi {
     }
 
     static List<Integer> oddOrEven(List<Integer> integers) {
-        return integers.stream().filter(x -> x % 2 != 0).count() % 2 == 0 ?
-                integers.stream().filter(x -> x % 2 != 0).toList() :
-                integers.stream().filter(x -> x % 2 == 0).toList();
+        Map<Boolean, List<Integer>> numbers = integers.stream()
+                .collect(Collectors.partitioningBy(x -> x % 2 != 0));
+        return numbers.get(integers.stream().filter(x -> x % 2 != 0).count() % 2 == 0);
     }
 
     static int minValue(int[] values) {
