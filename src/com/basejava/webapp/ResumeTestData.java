@@ -15,15 +15,15 @@ public class ResumeTestData {
 
     public static Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-//        resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
-//        resume.setContact(ContactType.MOBILE, "No info");
-//        resume.setContact(ContactType.HOME_PHONE, "No info");
-//        resume.setContact(ContactType.SKYPE, "skype:grigory.kislin");
-//        resume.setContact(ContactType.EMAIL, "gkislin@yandex.ru");
-//        resume.setContact(ContactType.LINKEDIN, "LinkedIn");
-//        resume.setContact(ContactType.GITHUB, "GitHub");
-//        resume.setContact(ContactType.STACKOVERFLOW, "Stackoverflow");
-//        resume.setContact(ContactType.PAGE_HOME, "Домашняя страница!!!");
+        resume.setContact(ContactType.PHONE, "+7(921) 855-0482");
+        resume.setContact(ContactType.MOBILE, "No info");
+        resume.setContact(ContactType.HOME_PHONE, "No info");
+        resume.setContact(ContactType.SKYPE, "skype:grigory.kislin");
+        resume.setContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.setContact(ContactType.LINKEDIN, "LinkedIn");
+        resume.setContact(ContactType.GITHUB, "GitHub");
+        resume.setContact(ContactType.STACKOVERFLOW, "Stackoverflow");
+        resume.setContact(ContactType.PAGE_HOME, "Домашняя страница!!!");
 //
 //        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
 //                "по Java Web и Enterprise технологиям"));

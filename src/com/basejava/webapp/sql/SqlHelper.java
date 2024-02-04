@@ -39,6 +39,9 @@ public class SqlHelper {
                 conn.commit();
                 return res;
             } catch (SQLException e) {
+                if (e.getSQLState().equals("23505")) {
+                    throw new ExistStorageException(e.getMessage());
+                }
                 conn.rollback();
                 throw new StorageException(e.getMessage());
             }
