@@ -80,12 +80,12 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void deleteContacts(Connection conn, Resume resume) {
-        sqlHelper.execute("DELETE  FROM contact WHERE resume_uuid=?", ps -> {
+    private void deleteContacts(Connection conn, Resume resume) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(
+                "DELETE  FROM contact WHERE resume_uuid=?")) {
             ps.setString(1, resume.getUuid());
             ps.execute();
-            return null;
-        });
+        }
     }
 
     @Override
@@ -115,8 +115,8 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.execute("SELECT * FROM resume r\n" +
-                                  "LEFT JOIN contact c ON r.uuid = c.resume_uuid\n" +
+        return sqlHelper.execute("SELECT * FROM resume r " +
+                                  "LEFT JOIN contact c ON r.uuid = c.resume_uuid" +
                                   " ORDER BY full_name, uuid", ps -> {
             ResultSet rs = ps.executeQuery();
             Map<String, Resume> map = new LinkedHashMap<>();
