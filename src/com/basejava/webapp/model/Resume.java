@@ -86,4 +86,8 @@ public class Resume implements Serializable {
     public void setSection(SectionType type,Section section) {
         this.sections.put(type,section);
     }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }
