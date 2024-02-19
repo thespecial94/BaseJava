@@ -72,7 +72,7 @@ public class ResumeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
-        String fullName = request.getParameter("fullName");
+        String fullName = request.getParameter("fullName").trim();
         final boolean isCreate = (uuid == null || uuid.isEmpty());
         Resume r;
         if (isCreate) {
@@ -84,21 +84,19 @@ public class ResumeServlet extends HttpServlet {
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
             if (HtmlUtil.isEmpty(value)) {
-                r.getContacts().remove(type);
             } else {
-                r.setContact(type, value);
+                r.setContact(type, value.trim());
             }
         }
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
             String[] values = request.getParameterValues(type.name());
             if (HtmlUtil.isEmpty(value) && values.length < 2) {
-                r.getSections().remove(type);
             } else {
                 switch (type) {
-                    case OBJECTIVE, PERSONAL -> r.setSection(type, new TextSection(value));
+                    case OBJECTIVE, PERSONAL -> r.setSection(type, new TextSection(value.trim()));
                     case ACHIEVEMENT, QUALIFICATIONS -> r.setSection(type,
-                            new ListSection(List.of(value.split("\\n"))));
+                            new ListSection(List.of(value.trim().split("\\n"))));
                 }
             }
         }
