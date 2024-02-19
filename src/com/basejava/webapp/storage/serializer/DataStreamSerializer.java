@@ -29,17 +29,17 @@ public class DataStreamSerializer implements StreamSerializer {
                     case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) section).getText());
                     case ACHIEVEMENT, QUALIFICATIONS ->
                             writeCollection(dos, ((ListSection) section).getItems(), dos::writeUTF);
-                    case EXPERIENCE, EDUCATION ->
-                            writeCollection(dos, ((OrganizationSection) section).getOrganizations(), org -> {
-                                dos.writeUTF(org.getLink().getName());
-                                dos.writeUTF(org.getLink().getUrl());
-                                writeCollection(dos, org.getPeriods(), period -> {
-                                    writeLocalDate(dos, period.getStartDate());
-                                    writeLocalDate(dos, period.getEndDate());
-                                    dos.writeUTF(period.getTitle());
-                                    dos.writeUTF(period.getDescription());
-                                });
-                            });
+//                    case EXPERIENCE, EDUCATION ->
+//                            writeCollection(dos, ((OrganizationSection) section).getOrganizations(), org -> {
+//                                dos.writeUTF(org.getLink().getName());
+//                                dos.writeUTF(org.getLink().getUrl());
+//                                writeCollection(dos, org.getPeriods(), period -> {
+//                                    writeLocalDate(dos, period.getStartDate());
+//                                    writeLocalDate(dos, period.getEndDate());
+//                                    dos.writeUTF(period.getTitle());
+//                                    dos.writeUTF(period.getDescription());
+//                                });
+//                            });
                 }
             });
         }
@@ -64,13 +64,13 @@ public class DataStreamSerializer implements StreamSerializer {
         return switch (sectionType) {
             case PERSONAL, OBJECTIVE -> new TextSection(dis.readUTF());
             case ACHIEVEMENT, QUALIFICATIONS -> new ListSection(readList(dis, dis::readUTF));
-            case EXPERIENCE, EDUCATION -> new OrganizationSection(
-                    readList(dis, () -> new Organization(
-                            new Link(dis.readUTF(), dis.readUTF()),
-                            readList(dis, () -> new Period(
-                                    readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()
-                            ))
-                    )));
+//            case EXPERIENCE, EDUCATION -> new OrganizationSection(
+//                    readList(dis, () -> new Organization(
+//                            new Link(dis.readUTF(), dis.readUTF()),
+//                            readList(dis, () -> new Period(
+//                                    readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()
+//                            ))
+//                    )));
         };
     }
 

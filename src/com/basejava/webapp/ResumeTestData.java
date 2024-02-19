@@ -24,17 +24,17 @@ public class ResumeTestData {
         resume.setContact(ContactType.GITHUB, "GitHub");
         resume.setContact(ContactType.STACKOVERFLOW, "Stackoverflow");
         resume.setContact(ContactType.PAGE_HOME, "Домашняя страница!!!");
-//
-//        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
-//                "по Java Web и Enterprise технологиям"));
-//        resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
-//                "креативность, инициативность. Пурист кода и архитектуры."));
-//
-//        ListSection listAchievementSection = getAchievementSection();
-//        resume.setSection(SectionType.ACHIEVEMENT, listAchievementSection);
-//
-//        ListSection listQualificationsSection = getQualificationsSection();
-//        resume.setSection(SectionType.QUALIFICATIONS, listQualificationsSection);
+
+        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
+                "по Java Web и Enterprise технологиям"));
+        resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
+                "креативность, инициативность. Пурист кода и архитектуры."));
+
+        ListSection listAchievementSection = getAchievementSection();
+        resume.setSection(SectionType.ACHIEVEMENT, listAchievementSection);
+
+        ListSection listQualificationsSection = getQualificationsSection();
+        resume.setSection(SectionType.QUALIFICATIONS, listQualificationsSection);
 //
 //
 //        resume.setSection(SectionType.EXPERIENCE, getExperienceSection());

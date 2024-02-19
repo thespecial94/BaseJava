@@ -170,8 +170,7 @@ public class SqlStorage implements Storage {
         return sqlHelper.transactionalExecute(conn -> {
             Map<String, Resume> resumes = new LinkedHashMap<>();
 
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT * FROM resume ORDER BY full_name, uuid")) {
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name, uuid")) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     String uuid = rs.getString("uuid");
@@ -187,16 +186,16 @@ public class SqlStorage implements Storage {
                 }
             }
 
-                try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM section")) {
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        Resume resume = resumes.get(rs.getString("resume_uuid"));
-                        setContact(rs, resume);
-                    }
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM section")) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Resume resume = resumes.get(rs.getString("resume_uuid"));
+                    setSection(rs, resume);
                 }
+            }
 
-                return new ArrayList<>(resumes.values());
-            });
+            return new ArrayList<>(resumes.values());
+        });
     }
 
     @Override
