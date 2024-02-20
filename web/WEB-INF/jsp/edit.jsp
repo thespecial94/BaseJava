@@ -17,7 +17,8 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <h1>Имя:</h1>
         <dl>
-            <input type="text" name="fullName" size=55 value="${resume.fullName}">
+            <input type="text" required placeholder="Ваше имя" pattern="^[A-Za-zА-Яа-яЁё\S]{1,}"
+                   name="fullName" size=55 value="${resume.fullName}">
         </dl>
         <h2>Контакты:</h2>
         <c:forEach var="type" items="<%=ContactType.values()%>">
@@ -44,19 +45,7 @@
                 </c:when>
             </c:choose>
         </c:forEach>
-        <button type="button" name = "save" onclick="validateRequiredFields()">Сохранить</button>
-        <script>
-            function validateRequiredFields() {
-                const input = document.querySelector("input[name='fullName']");
-                const value = input.value.trim();
-                if (value === "") {
-                    alert("Введите Имя!!!");
-                    input.focus();
-                } else {
-                    document.getElementById("formResume").submit();
-                }
-            }
-        </script>
+        <button type="submit" name = "save">Сохранить</button>
         <button name = "cancel" type="reset" onclick="window.history.back()">Отменить</button>
     </form>
 </section>

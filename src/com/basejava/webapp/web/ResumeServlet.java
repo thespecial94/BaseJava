@@ -96,7 +96,9 @@ public class ResumeServlet extends HttpServlet {
                 switch (type) {
                     case OBJECTIVE, PERSONAL -> r.setSection(type, new TextSection(value.trim()));
                     case ACHIEVEMENT, QUALIFICATIONS -> r.setSection(type,
-                            new ListSection(List.of(value.trim().split("\\n"))));
+                            new ListSection(List.of(value.trim()
+                                    .replaceAll("(\r\n){2,}", "\n")
+                                    .split("\\n"))));
                 }
             }
         }
