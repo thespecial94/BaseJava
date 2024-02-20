@@ -1,6 +1,8 @@
 <%@ page import="com.basejava.webapp.model.ListSection" %>
 <%@ page import="com.basejava.webapp.model.TextSection" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.basejava.webapp.util.HtmlUtil" %>
+<%@ page import="com.basejava.webapp.model.OrganizationSection" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -57,6 +59,30 @@
                             </ul>
                         </td>
                     </tr>
+                </c:when>
+                <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
+                    <c:forEach var="org" items="<%=((OrganizationSection) section).getOrganizations()%>">
+                        <tr>
+                            <td colspan="2">
+                                <c:choose>
+                                    <c:when test="${empty org.link.url}">
+                                        <h3>${org.link.name}</h3>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h3><a href="${org.link.url}">${org.link.name}</a></h3>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                        <c:forEach var="period" items="${org.periods}">
+                            <jsp:useBean id="period" type="com.basejava.webapp.model.Period"/>
+                            <tr>
+                                <td width="15%" style="vertical-align: top"><%=HtmlUtil.formatDates(period)%>
+                                </td>
+                                <td><b>${period.title}</b><br>${period.description}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:forEach>
                 </c:when>
             </c:choose>
         </c:forEach>

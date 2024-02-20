@@ -23,6 +23,8 @@ public class Resume implements Serializable {
         EMPTY.setSection(SectionType.PERSONAL, TextSection.EMPTY);
         EMPTY.setSection(SectionType.ACHIEVEMENT, ListSection.EMPTY);
         EMPTY.setSection(SectionType.QUALIFICATIONS, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY));
+        EMPTY.setSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY));
     }
     // Unique identifier
     private String uuid;

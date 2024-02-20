@@ -3,6 +3,7 @@ package com.basejava.webapp.web;
 import com.basejava.webapp.Config;
 import com.basejava.webapp.model.*;
 import com.basejava.webapp.storage.Storage;
+import com.basejava.webapp.util.DateUtil;
 import com.basejava.webapp.util.HtmlUtil;
 
 import javax.servlet.ServletConfig;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
@@ -41,7 +43,7 @@ public class ResumeServlet extends HttpServlet {
             }
             case "add" -> resume = Resume.EMPTY;
             case "view" -> resume = storage.get(uuid);
-            case  "edit" ->  {
+            case "edit" ->  {
                 resume = storage.get(uuid);
                 for (SectionType type : SectionType.values()) {
                     Section section = resume.getSection(type);
@@ -55,6 +57,20 @@ public class ResumeServlet extends HttpServlet {
                             if (section == null) {
                                 section = ListSection.EMPTY;
                             }
+                        }
+                        case EDUCATION, EXPERIENCE -> {
+                            OrganizationSection orgSection = (OrganizationSection) section;
+                            List<Organization> emptyFirstOrganizations = new ArrayList<>();
+                            emptyFirstOrganizations.add(Organization.EMPTY);
+                            if (orgSection != null) {
+                                for (Organization org : orgSection.getOrganizations()) {
+                                    List<Period> emptyFirstPeriods = new ArrayList<>();
+                                    emptyFirstPeriods.add(Period.EMPTY);
+                                    emptyFirstPeriods.addAll(org.getPeriods());
+                                    emptyFirstOrganizations.add(new Organization(org.getLink(), emptyFirstPeriods));
+                                }
+                            }
+                            section = new OrganizationSection(emptyFirstOrganizations);
                         }
                     }
                     resume.setSection(type, section);
@@ -99,6 +115,29 @@ public class ResumeServlet extends HttpServlet {
                             new ListSection(List.of(value.trim()
                                     .replaceAll("(\r\n){2,}", "\n")
                                     .split("\\n"))));
+                    case EDUCATION, EXPERIENCE -> {
+                        List<Organization> organizations = new ArrayList<>();
+                        String[] urls = request.getParameterValues(type.name() + "url");
+                        for (int i = 0; i < values.length; i++) {
+                            String name = values[i];
+                            if (!HtmlUtil.isEmpty(name)) {
+                                List<Period> periods = new ArrayList<>();
+                                String pfx = type.name() + i;
+                                String[] startDates = request.getParameterValues(pfx + "startDate");
+                                String[] endDates = request.getParameterValues(pfx + "endDate");
+                                String[] titles = request.getParameterValues(pfx + "title");
+                                String[] descriptions = request.getParameterValues(pfx + "description");
+                                for (int j = 0; j < titles.length; j++) {
+                                    if (!HtmlUtil.isEmpty(titles[j])) {
+                                        periods.add(new Period(DateUtil.parse(startDates[j]),
+                                                DateUtil.parse(endDates[j]), titles[j], descriptions[j]));
+                                    }
+                                }
+                                organizations.add(new Organization(new Link(name, urls[i]), periods));
+                            }
+                        }
+                        r.setSection(type, new OrganizationSection(organizations));
+                    }
                 }
             }
         }

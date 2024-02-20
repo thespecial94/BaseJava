@@ -35,11 +35,10 @@ public class ResumeTestData {
 
         ListSection listQualificationsSection = getQualificationsSection();
         resume.setSection(SectionType.QUALIFICATIONS, listQualificationsSection);
-//
-//
-//        resume.setSection(SectionType.EXPERIENCE, getExperienceSection());
-//
-//        resume.setSection(SectionType.EDUCATION, getEducationSection());
+
+        resume.setSection(SectionType.EXPERIENCE, getExperienceSection());
+
+        resume.setSection(SectionType.EDUCATION, getEducationSection());
 
         System.out.println(resume.getFullName());
         for (ContactType type : ContactType.values()) {
