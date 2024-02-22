@@ -11,6 +11,7 @@ import java.util.Properties;
 
 public class Config {
 
+    private static final String HOME_DIR = "C:\\JavaCourse\\BaseJava";
     private static final File PROPS = new File(getHomeDir(),"config\\resume.properties");
     private static final Config INSTANCE = new Config();
     private final File storageDir;
@@ -42,7 +43,7 @@ public class Config {
 
     private static File getHomeDir() {
         String prop = System.getProperty("homeDir");
-        File homeDir = new File(prop == null ? "." : prop);
+        File homeDir = new File(prop == null ? HOME_DIR : prop);
         if (!homeDir.isDirectory()) {
             throw new IllegalStateException(homeDir + " is not directory");
         }
